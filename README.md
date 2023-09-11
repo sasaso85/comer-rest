@@ -10,26 +10,28 @@ La respuesta de la API para cada petición deberá considerar los siguientes cam
 - cve_error (donde 0 es exitoso y un valor negativo cuando es error). 
 - cve_mensaje (la descripción del código de mensaje).
 
-> Los registros no deben permitir ni repetir **nombre** de usuario ni **correo electrónico**.
+> Los registros no deben permitir ni repetir:
+>  - **nombre de usuario**  
+>  - **correo electrónico**.
 
 Los clientes deberán tener los siguientes campos:
 
-| Name                | Type           |
-|---------------------|----------------|
-| client_id           | Integer        |
-| nombre_usuario      | String         |
-| contrasenia         | String         |
-| nombre              | String         |
-| apellidos           | String         |
-| correo_electronico  | String         |
-| edad                | Integer        |
-| estatura            | Decimal number |
-| peso                | Decimal number |
-| IMC                 | Decimal number |
-| GEB                 | Decimal number |
-| ETA                 | Decimal number |
-| fecha_creacion      | Date           |
-| fecha_actualizacion | Date           |
+| Name               | Type           |
+|--------------------|----------------|
+| clienteId          | Integer        |
+| nombreUsuario      | String         |
+| contrasenia        | String         |
+| nombre             | String         |
+| apellidos          | String         |
+| correoElectronico  | String         |
+| edad               | Integer        |
+| estatura           | Decimal number |
+| peso               | Decimal number |
+| IMC                | Decimal number |
+| GEB                | Decimal number |
+| ETA                | Decimal number |
+| fechaCreacion      | Date           |
+| fechaActualizacion | Date           |
 
 
 - Realiza el Siguiente POST para agregar un Cliente
@@ -39,11 +41,11 @@ Los clientes deberán tener los siguientes campos:
     Con la siguiente estructura JSON (Diferentes Valores)
 
         {
-            "Nombre": "Juan",
-            "Apellidos": "Perez Hernandez", 
-            "Nombre_Usuario": "Ju",
-            "Correo_Electronico": "jperez@hotmail.com",
-            "Contraseña": "juanitoperez"
+            "nombre": "Juan",
+            "apellidos": "Perez Hernandez", 
+            "nombre_Usuario": "Ju",
+            "correo_Electronico": "jperez@hotmail.com",
+            "contrasenia": "juanitoperez"
         }
 
 - Realiza un Get (Tendrá la opción de todos o por ID)
@@ -55,9 +57,37 @@ Los clientes deberán tener los siguientes campos:
   **PUT** */NutriNET/Cliente/59*
   
       {
-          "Edad": 39
-          "Estatura": 1.80
-          "Peso": 60
+          "edad": 39
+          "estatura": 1.80
+          "peso": 60
           "GEB": 1500
       }
+
+
+# Info para correr la aplicación
+
+## Configuración
+*** 
+Posicionarse en la raiz del proyecto:
+- Construir el jar:
+
+  `mvn clean install`
+
+- Crear la imagen de la aplicación:
+
+  `docker build -t client_rest_docker_image .`
+
+### Contenedor de MongoDB
+- Descargar la imagen
+
+  `docker pull mongo`
+- Correr la imagen
+
+  `docker run -d --name mongo-on-docker -p 27017:27017 mongo`
+
+### Contenedor de la aplicación
+- Correr la imagen
+
+  `docker run -d --name clientapplication-on-docker -p 8080:8080 client_rest_docker_image`
+
 
